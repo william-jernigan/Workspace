@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+</Project>

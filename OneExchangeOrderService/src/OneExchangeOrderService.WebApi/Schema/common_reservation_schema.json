@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Identifies the event. Producers MUST ensure that source + id is unique for each distinct event."
+    },
+    "source": {
+      "type": "string",
+      "description": "Identifies the context in which an event happened."
+    },
+    "specversion": {
+      "type": "string",
+      "description": "The version of the CloudEvents specification which the event uses."
+    },
+    "type": {
+      "type": "string",
+      "description": "This attribute contains a value describing the type of event related to the originating occurrence."
+    },
+    "datacontenttype": {
+      "type": "string",
+      "description": "Content type of data value per RFC 2046. This attribute enables data to carry any type of content"
+    },
+    "dataschema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Identifies the schema that data adheres to."
+
+    },
+    "subject": {
+      "type": "string",
+      "description": "This describes the subject of the event in the context of the event producer (identified by source)."
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the occurrence happened, in UTC with 3 digit ms precision"
+    },
+    "ispartial": {
+      "type": "boolean",
+      "description": "Extension attribute, if present, will mark the message as a partial update."
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "systemMeta": {
+          "type": "object",
+          "properties": {
+            "tenantID": {
+              "type": "string"
+            },
+            "_insertedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "_insertedBy": {
+              "type": "string"
+            },
+            "_updatedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "_updatedBy": {
+              "type": "string"
+            },
+            "status": {
+              "type": "boolean"
+            },
+            "statusReason": {
+              "type": "string"
+            }
+          },
+          "required": [ "tenantID" ],
+          "additionalProperties": false
+        },
+        "externalReference": {
+          "type": "object",
+          "properties": {
+            "sourceSystem": {
+              "type": "string"
+            },
+            "targetSystem": {
+              "type": "string"
+            },
+            "sourceReferenceId": {
+              "type": "string"
+            },
+            "targetReferenceId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "bookingItems": {
+          "type": "array",
+          "additionalItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "itemCode": {
+                "type": "string",
+                "description": "Suggested format <ResortID-UnitType> or <ResortID-UnitNum>",
+                "examples": [ "GP-CBC-1BD", "GP-CBR-U101" ]
+              },
+              "itemClass": {
+                "type": "string",
+                "description": "The type of item",
+                "examples": [ "UnitType", "Unit" ]
+              },
+              "parentCode": {
+                "type": "string",
+                "description": "If the ItemClass is UnitType then parent is ResortID",
+                "examples": [ "GP-CBC", "GP-CBR" ]
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the Unit or UnitType",
+                "example": [ "One Bedroom" ]
+              },
+              "description": {
+                "type": "string",
+                "description": "The description of the Unit or UnitType",
+                "example": [ "The one bedroom unit sleeps 4 and has a full kitchen, dining area and 1 bathroom." ]
+              },
+              "itemAttributes": {
+                "type": "array",
+                "additionalItems": true,
+                "description": "Additional attributes such as unit amenities",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attribute": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "attribute",
+                    "value"
+                  ]
+                }
+              },
+              "memberID": {
+                "type": "string",
+                "description": "This the memberID",
+                "examples": [ "1234" ]
+              },
+              "startDate": {
+                "type": "string",
+                "description": "Booking start date",
+                "format": "date-time"
+              },
+              "endDate": {
+                "type": "string",
+                "description": "Booking end date",
+                "format": "date-time"
+              },
+              "weekNumber": {
+                "type": "number",
+                "description": "Booking week number from 1 to 52"
+              },
+              "action": {
+                "type": "string",
+                "description": "Specify if Initiate, Modify, Confirm or Cancel a booking",
+                "examples": [ "Confirm", "Cancel" ]
+              },
+              "guestCounts": {
+                "type": "object",
+                "properties": {
+                  "adults": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "children": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [ "adults" ]
+              },
+              "isOwnerBooking": {
+                "type": "boolean",
+                "description": "true if booking is for the owner, false if for a guest"
+              },
+              "guestInfo": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "postalAddresses": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_sequence": {
+                          "type": "integer"
+                        },
+                        "addressType": {
+                          "type": "string",
+                          "enum": [ "residence", "business", "other" ]
+                        },
+                        "line1": {
+                          "type": "string"
+                        },
+                        "line2": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "state": {
+                          "type": "string"
+                        },
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [ "line1", "city", "state", "postalCode", "country" ]
+                    }
+                  },
+                  "phoneNumbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_sequence": {
+                          "type": "integer"
+                        },
+                        "phoneType": {
+                          "type": "string",
+                          "enum": [ "mobile", "home", "work" ]
+                        },
+                        "number": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [ "phoneType", "number" ]
+                    }
+                  },
+                  "digitalAddresses": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "_sequence": {
+                          "type": "integer"
+                        },
+                        "digitalAddressType": {
+                          "type": "string",
+                          "enum": [ "email" ]
+                        },
+                        "digitalAddress": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [ "digitalAddressType", "digitalAddress" ]
+                    }
+                  }
+                },
+                "required": [ "firstName", "lastName" ]
+              },
+              "priceLevel": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "boolean",
+                    "description": "Optional, not used"
+                  },
+                  "priceLevel": {
+                    "type": "string",
+                    "description": "Price rate plan",
+                    "examples": [ "RatePlanCode1", "RatePlanCode2" ]
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency used for the booking, can be partner points or weeks",
+                    "examples": [ "usd", "cad", "choice points", "weeks" ]
+                  },
+                  "totalPrice": {
+                    "type": "number",
+                    "description": "Price in the currency specified above"
+                  },
+                  "priceAttributes": {
+                    "type": "array",
+                    "additionalItems": true,
+                    "description": "Price attributes can be Fees, AdditionalCharges, Taxes",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "attribute": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "attribute",
+                        "value"
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "bookingAttributes": {
+                "type": "array",
+                "additionalItems": true,
+                "description": "Booking attributes can be GuestCounts, Guarantees, Rules",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attribute": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "attribute",
+                    "value"
+                  ]
+                }
+              },
+              "bookingComments": {
+                "type": "array",
+                "additionalItems": true,
+                "description": "Booking comments",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "attribute": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "required": [
+                    "attribute",
+                    "value"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+        "required": [
+          "systemMeta",
+          "externalReference",
+          "bookingItems"
+        ],
+        "additionalProperties": false
+
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "source",
+      "specversion",
+      "type",
+      "data"
+    ]
+  }

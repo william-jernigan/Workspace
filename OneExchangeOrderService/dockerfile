@@ -1,0 +1,26 @@
+# Build Stage
+FROM acrusw3shdnonprodv2.azurecr.io/dotnet/sdk:8.0 AS prepare-restore-files
+WORKDIR /src
+
+# Copy csproj and restore as distinct layers for caching
+COPY . .
+RUN dotnet subset restore ./OneExchangeOrderService.sln --root-directory ./ --output restore_subset/
+
+# Build Stage
+FROM acrusw3shdnonprodv2.azurecr.io/dotnet/sdk:8.0 AS build
+WORKDIR /src
+# Copy and publish app and libraries
+COPY --from=prepare-restore-files /src/restore_subset .
+ARG FEED_ACCESSTOKEN
+ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS="{\"endpointCredentials\": [{\"endpoint\":\"https://hiltongrandvacations.pkgs.visualstudio.com/_packaging/OneVision/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}, {\"endpoint\":\"https://hiltongrandvacations.pkgs.visualstudio.com/_packaging/HGVC/nuget/v3/index.json\", \"username\":\"docker\", \"password\":\"${FEED_ACCESSTOKEN}\"}]}"
+RUN dotnet restore ./OneExchangeOrderService.sln
+
+COPY src/ src/
+RUN dotnet publish -c Release -o out --no-restore --p:SkipGenOpenAPI=true ./src/OneExchangeOrderService.WebApi/OneExchangeOrderService.WebApi.csproj
+
+# Serve Stage
+FROM acrusw3shdnonprodv2.azurecr.io/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /src/out .
+
+CMD [ "dotnet", "OneExchangeOrderService.WebApi.dll" ]

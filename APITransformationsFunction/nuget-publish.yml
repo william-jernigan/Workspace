@@ -1,0 +1,78 @@
+trigger:
+  branches:
+    include:
+    - main
+    - v1
+
+workspace:
+  clean: all
+
+variables:
+  solution: 'APITransformationsFunction.sln'
+  nuspec: 'apitransformationsfunction.nuspec'
+  buildConfiguration: 'Release'
+
+steps:
+- checkout: self
+  fetchDepth: 0
+- task: UseDotNet@2
+  displayName: 'Use .NET 6'
+  inputs:
+    useGlobalJson: true
+
+- task: NuGetToolInstaller@1
+
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet Restore'
+  inputs:
+    command: 'restore'
+    projects: '$(solution)'
+    feedstouse: 'select'
+    vstsFeed: '9dd1e663-225b-4c82-8a87-dfe7d950db91'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet tool restore'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: restore
+
+- powershell: |
+    dotnet nbgv cloud
+  displayName: Set Version
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet Build'
+  inputs:
+    command: build
+    projects: '$(solution)'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: NuGetCommand@2
+  displayName: 'Nuget Pack'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/$(nuspec)'
+    versioningScheme: byBuildNumber
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    nuGetFeedType: internal
+    publishVstsFeed: 'OneVision'
+    allowPackageConflicts: true
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    nuGetFeedType: internal
+    publishVstsFeed: 'HGVC'
+    allowPackageConflicts: true

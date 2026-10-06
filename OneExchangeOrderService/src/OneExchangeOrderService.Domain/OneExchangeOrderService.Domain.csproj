@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Nanoid" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="NJsonSchema" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Persistance\**" />
+    <EmbeddedResource Remove="Persistance\**" />
+    <None Remove="Persistance\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Persistence\Repositories\Exchange\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OneExchangeOrderService.DTO\OneExchangeOrderService.DTO.csproj" />
+  </ItemGroup>
+
+</Project>

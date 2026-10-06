@@ -1,0 +1,114 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "OneExchangeDbContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "MinimumProductVersion": "2.6.0",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "OneExchangeOrderService.Infrastructure.EFGenerator",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[exch_order].[exchangeTransactionLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[order]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderGuest]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderItem]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderItemAttribute]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderPayment]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderRefund]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_order].[orderReturn]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_profile].[address]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_profile].[digitalAddress]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_profile].[identifier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_profile].[phone]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exch_profile].[profile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exchange].[organization]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exchange].[partner]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exchange].[tenant]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[exchange].[tradingAgreement]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": true,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": true,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": true,
+   "UseT4Split": false
+}

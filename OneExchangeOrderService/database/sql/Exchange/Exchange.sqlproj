@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="0.1.14-preview" />
+
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <Name>Exchange</Name>
+    <ProjectGuid>{290769AF-0A2C-4E91-B0D8-C171D639D835}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Build Include="security\schemas\exchangeorder.sql" />
+    <Build Include="security\schemas\exchangeprofile.sql" />
+    <Build Include="security\schemas\exchange.sql" />
+    <Build Include="tables\dbo.profile.sql" />
+
+    <Build Include="tables\dbo.address.sql" />
+    <Build Include="tables\dbo.phone.sql" />
+    <Build Include="tables\dbo.digitalAddress.sql" />
+    <Build Include="tables\dbo.identifier.sql" />
+    <Build Include="tables\dbo.organization.sql" />
+    <Build Include="tables\dbo.tenant.sql" />
+    <Build Include="tables\dbo.partner.sql" />
+    <Build Include="tables\dbo.tradingAgreement.sql" />
+    <Build Include="tables\dbo.order.sql" />
+    <Build Include="tables\dbo.orderItem.sql" />
+    <Build Include="tables\dbo.orderItemAttribute.sql" />
+    <Build Include="tables\dbo.orderGuest.sql" />
+    <Build Include="tables\dbo.orderPayment.sql" />
+    <Build Include="tables\dbo.orderReturn.sql" />
+    <Build Include="tables\dbo.orderRefund.sql" />
+    <Build Include="tables\dbo.exchangeTransactionLog.sql" />
+    <Build Include="tables\dbo.program.sql" />
+    <Build Include="stored procedures\ArrivalsReport.sql" />
+    <Build Include="stored procedures\BookingReport.sql" />
+    <Build Include="stored procedures\CancellationReport.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.publish.xml" />
+  </ItemGroup>
+ <ItemGroup>
+    <PackageReference Include="onetruth.database.admin" Version="1.0.*">
+      <SuppressMissingDependenciesErrors>True</SuppressMissingDependenciesErrors>
+      <DacpacName>_admin</DacpacName>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="masterKeyPassword">
+      <Value>$(SqlCmdVar__1)</Value>
+      <DefaultValue>Some5uper&amp;5trongPassw0rd</DefaultValue>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
+  </Target>
+</Project>

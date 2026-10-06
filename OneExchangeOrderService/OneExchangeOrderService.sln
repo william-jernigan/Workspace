@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneExchangeOrderService.Application", "src\OneExchangeOrderService.Application\OneExchangeOrderService.Application.csproj", "{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E03E6A84-4789-4C94-B47F-288E0DC88588}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneExchangeOrderService.Domain", "src\OneExchangeOrderService.Domain\OneExchangeOrderService.Domain.csproj", "{317BE1E5-A710-48DB-BDA1-F60155842D4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneExchangeOrderService.Infrastructure", "src\OneExchangeOrderService.Infrastructure\OneExchangeOrderService.Infrastructure.csproj", "{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneExchangeOrderService.WebApi", "src\OneExchangeOrderService.WebApi\OneExchangeOrderService.WebApi.csproj", "{BA9CC76C-6428-46BB-A719-738CA8E1601C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{88157A72-B65D-446B-B931-55DFC814FE58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "tests\Application.UnitTest\Application.UnitTests.csproj", "{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.IntegrationTests", "tests\WebApi.IntegrationTests\WebApi.IntegrationTests.csproj", "{0CB091A8-BC70-497A-8683-59AC930389A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88EFC946-38A4-4DA7-AE6F-FA734D6C5884}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		container-app-config.yml = container-app-config.yml
+		coverlet.runsettings = coverlet.runsettings
+		dockerfile = dockerfile
+		merge-validation.yml = merge-validation.yml
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneExchangeOrderService.DTO", "src\OneExchangeOrderService.DTO\OneExchangeOrderService.DTO.csproj", "{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneExchangeOrderService.HttpClient", "src\OneExchangeOrderService.HttpClient\OneExchangeOrderService.HttpClient.csproj", "{7CADE232-505F-4A6E-BA73-9B3B5F14D62B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneExchangeOrderService.Infrastructure.EFGenerator", "OneExchangeOrderService.Infrastructure.EFGenerator\OneExchangeOrderService.Infrastructure.EFGenerator.csproj", "{713B41AC-04C5-4EDC-AA1F-A07AEE1B773B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317BE1E5-A710-48DB-BDA1-F60155842D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317BE1E5-A710-48DB-BDA1-F60155842D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317BE1E5-A710-48DB-BDA1-F60155842D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317BE1E5-A710-48DB-BDA1-F60155842D4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9CC76C-6428-46BB-A719-738CA8E1601C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9CC76C-6428-46BB-A719-738CA8E1601C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9CC76C-6428-46BB-A719-738CA8E1601C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9CC76C-6428-46BB-A719-738CA8E1601C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CB091A8-BC70-497A-8683-59AC930389A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB091A8-BC70-497A-8683-59AC930389A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB091A8-BC70-497A-8683-59AC930389A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB091A8-BC70-497A-8683-59AC930389A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CADE232-505F-4A6E-BA73-9B3B5F14D62B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CADE232-505F-4A6E-BA73-9B3B5F14D62B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CADE232-505F-4A6E-BA73-9B3B5F14D62B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CADE232-505F-4A6E-BA73-9B3B5F14D62B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{713B41AC-04C5-4EDC-AA1F-A07AEE1B773B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{713B41AC-04C5-4EDC-AA1F-A07AEE1B773B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{713B41AC-04C5-4EDC-AA1F-A07AEE1B773B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6396C1A2-B82E-44AF-8EA0-64790A6EBB0A} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{317BE1E5-A710-48DB-BDA1-F60155842D4B} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{C6782FB9-1732-49C1-AF4D-7C79FEB74EF3} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{BA9CC76C-6428-46BB-A719-738CA8E1601C} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{2B2DED75-671C-4FE1-ACBA-8274A41B4DFA} = {88157A72-B65D-446B-B931-55DFC814FE58}
+		{0CB091A8-BC70-497A-8683-59AC930389A3} = {88157A72-B65D-446B-B931-55DFC814FE58}
+		{F8FA0711-102F-4B9D-A3A2-C0A1E48B8FDA} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{7CADE232-505F-4A6E-BA73-9B3B5F14D62B} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+		{713B41AC-04C5-4EDC-AA1F-A07AEE1B773B} = {E03E6A84-4789-4C94-B47F-288E0DC88588}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A6D7E8B-273E-472E-B9A9-47B885A40420}
+	EndGlobalSection
+EndGlobal

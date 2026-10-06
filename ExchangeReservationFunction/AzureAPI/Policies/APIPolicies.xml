@@ -1,0 +1,91 @@
+<policies>
+  <inbound>
+    <base />
+    <!-- Enabled CORS policy to allow browser based clients access to this API -->
+    <cors allow-credentials="true">
+      <allowed-origins>
+        <origin>https://yourapp.com</origin>
+        <!-- Empty placeholder for UI -->
+      </allowed-origins>
+      <allowed-methods preflight-result-max-age="300">
+        <method>GET</method>
+        <method>POST</method>
+        <method>PUT</method>
+        <method>OPTIONS</method>
+      </allowed-methods>
+      <allowed-headers>
+        <header>accept</header>
+        <header>content-type</header>
+        <header>ocp-apim-subscription-key</header>
+        <header>version</header>
+        <header>Authorization</header>
+      </allowed-headers>
+    </cors>
+    <!-- JWT validation using required-claims for audience -->
+    <validate-jwt header-name="Authorization" require-expiration-time="true" require-scheme="Bearer" require-signed-tokens="true">
+      <openid-config url="https://login.microsoftonline.com/{{arrivia-oauth-tenantid}}/v2.0/.well-known/openid-configuration" />
+      <issuers>
+        <issuer>https://login.microsoftonline.com/1a0105b6-f4af-42cf-895d-25550fe6bd5a/v2.0</issuer>
+      </issuers>
+      <required-claims>
+        <claim name="aud">
+          <value>{{arrivia-oauth-clientid}}</value>
+        </claim>
+      </required-claims>
+    </validate-jwt>
+    <set-header name="Authorization" exists-action="override">
+      <value>@(context.Request.Headers.GetValueOrDefault("Authorization", ""))</value>
+    </set-header>
+  </inbound>
+  <backend>
+    <forward-request timeout="60" buffer-request-body="false" />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+    <choose>
+      <when condition="@(context.LastError.Source == &quot;validate-jwt&quot;)">
+        <return-response>
+          <set-status code="401" reason="Unauthorized" />
+          <set-header name="Content-Type" exists-action="override">
+            <value>application/json</value>
+          </set-header>
+          <set-body template="liquid">
+            {
+            "type": "https://api.hgv.com/errors/unauthorized",
+            "title": "Unauthorized",
+            "status": 401,
+            "detail": "Missing or invalid authentication credentials.",
+            "instance": "https://api.hgv.com/errors/@(GUID.NEWGUID().TOSTRING())"
+            }
+          </set-body>
+        </return-response>
+      </when>
+      <when condition="@(context.LastError.Reason == "Timeout")">
+        <return-response>
+          <set-status code="504" reason="Gateway Timeout" />
+          <set-header name="Content-Type" exists-action="override">
+            <value>application/json</value>
+          </set-header>
+          <set-body template="liquid">
+            {
+            "statusCode": 504,
+            "message": "Gateway Timeout"
+            }
+          </set-body>
+        </return-response>
+      </when>
+    </choose>
+    <set-header name="ErrorStatusCode" exists-action="override">
+      <value>@(context.Response.StatusCode.ToString())</value>
+    </set-header>
+    <set-header name="ErrorReason" exists-action="override">
+      <value>@(context.LastError.Reason)</value>
+    </set-header>
+    <set-header name="ErrorMessage" exists-action="override">
+      <value>@(context.LastError.Message)</value>
+    </set-header>
+  </on-error>
+</policies>

@@ -1,0 +1,42 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneVision/OneSystem
+      ref: refs/tags/pipeline-database-2.0
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+  paths:
+    include:
+      - database
+
+pool:
+  name: OneVision Build
+
+parameters:
+  - name: Environments
+    displayName: Release to Target Environments
+    type: object
+    default:
+        - environment: DEV
+          variableGroup: OneSystem-Database-DEV
+          serviceConnectionName: OneVision-NonProd-Infrastructure
+        - environment: QAT
+          variableGroup: OneSystem-Database-QAT
+          serviceConnectionName: OneVision-NonProd-Infrastructure     
+  - name: SETUP_DB_PERMISSIONS
+    displayName: Set up Database Permissions? (run once to set up new DB)
+    type: boolean
+    default: false
+
+extends:
+  template: Pipelines/Database/pipeline.yml@templates
+  parameters:
+    PROJECT_PATH: database/sql/Exchange
+    PROJECT_NAME: Exchange
+    SERVICE_NAME: one-exch-order-svc
+    ENVIRONMENTS: ${{ parameters.Environments }}
+    SETUP_DB_PERMISSIONS: ${{ parameters.SETUP_DB_PERMISSIONS }} # Flag to optionally run "Set Up Database Permissions" job after deployment.

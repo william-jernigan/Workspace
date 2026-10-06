@@ -1,0 +1,22 @@
+pool:
+  name: vmss-nonprod
+
+trigger: none
+
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: OneVision/OneSystem
+    ref: refs/tags/pipeline-container-app-14.0
+
+variables:
+  - name: SERVICE_NAME # Used for docker image, container app name, apim, etc.
+    value: one-exch-order-svc
+  - name: DOTNET_ROLL_FORWARD # Used for dotnet tools (swashbuckle.aspnetcore.cli) that are still referenceing .NET 6/7 to use .NET 8
+    value: LatestMajor
+
+extends:
+  template: Pipelines/Container App/merge-validation.yml@templates
+  parameters:
+    SERVICE_NAME: $(SERVICE_NAME)

@@ -1,0 +1,78 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - src/OneExchangeOrderService.HttpClient
+
+pool:
+  name: 'HGV Private Premium Pool'
+
+workspace:
+  clean: all
+
+variables:
+  solution: 'OneExchangeOrderService.HttpClient.csproj'
+  buildConfiguration: 'Release'
+
+steps:
+- checkout: self
+  fetchDepth: 0
+- task: UseDotNet@2
+  displayName: 'Use .NET 8'
+  inputs:
+    version: 8.x
+    performMultiLevelLookup: true
+
+- task: NuGetToolInstaller@1
+
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet Restore'
+  inputs:
+    command: 'restore'
+    projects: '**/$(solution)'
+    feedstouse: 'select'
+    vstsFeed: '9dd1e663-225b-4c82-8a87-dfe7d950db91'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet tool restore'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: restore
+
+- powershell: |
+    dotnet nbgv cloud
+  displayName: Set Version
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet Build'
+  inputs:
+    command: build
+    projects: '**/$(solution)'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'DotNet Pack'
+  inputs:
+    command: "pack"
+    packagesToPack: '**/$(solution)'
+    versioningScheme: byBuildNumber
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
+
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    nuGetFeedType: internal
+    publishVstsFeed: 'OneVision'
+    allowPackageConflicts: true

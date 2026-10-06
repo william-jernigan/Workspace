@@ -1,0 +1,51 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneVision/OneSystem
+      ref: refs/tags/pipeline-container-app-14.0
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+  paths:
+    exclude:
+      - database
+
+pool:
+  name: OneVision Build
+
+parameters:
+  - name: DeploymentTarget
+    displayName: Target for Deployment
+    default: AutoDeployment
+    values:
+      - AutoDeployment
+      - DEV
+      - QAT
+      - STG
+      - PRD
+  - name: ForceDeployAPIM
+    displayName: Force Re-Deploy of APIM?
+    type: boolean
+    default: false
+  - name: ForceBuild
+    displayName: Force Build (update base image)?
+    type: boolean
+    default: false
+  - name: AutoDeployment
+    displayName: Automatic Deployment to Environments
+    type: object
+    default:
+      - current: DEV
+        previous: Build
+
+extends:
+  template: Pipelines/Container App/pipeline.yml@templates
+  parameters:
+    DeploymentTarget: ${{ parameters.DeploymentTarget }}
+    AutoDeployment: ${{ parameters.AutoDeployment }}
+    ForceDeployAPIM: ${{ parameters.ForceDeployAPIM }}
+    ForceBuild: ${{ parameters.ForceBuild }}
+    ServiceName: one-exch-order-svc

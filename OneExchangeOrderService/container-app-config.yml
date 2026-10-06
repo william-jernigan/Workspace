@@ -1,0 +1,117 @@
+# Values like the line below are replaced by variables available during pipeline execution, either provided in the pipeline yaml, variable groups or global ADO variables.
+# Parameters and job output variables are NOT accessible by the "Replace Tokens" step that is used for this variable substitution.
+# For more information, refer to: https://github.com/qetza/vsts-replacetokens-task
+location: "#{AZURE_LOCATION}#"
+name: ca-usw3-#{environment}#-one-exch-order-svc
+resourceGroup: "#{RESOURCE_GROUP_NAME}#"
+type: Microsoft.App/containerApps
+tags:
+  env: "#{environment}#"
+  service: ca-usw3-#{environment}#-one-exch-order-svc
+  version: "#{GitBuildVersion}#"
+identity:
+  type: SystemAssigned
+properties:
+  managedEnvironmentId: /subscriptions/#{SUBSCRIPTION_ID}#/resourceGroups/#{RESOURCE_GROUP_NAME}#/providers/Microsoft.App/managedEnvironments/#{CONTAINER_APP_ENVIRONMENT_NAME}#
+  configuration:
+    activeRevisionsMode: Single
+    ingress:
+      external: true # Allows container app to be reached from internal vnet NOT the internet
+      allowInsecure: false
+      targetPort: 8080
+      traffic:
+        - latestRevision: true
+          weight: 100
+      transport: Auto
+    secrets:
+      - name: myregistrypassword
+        value: "#{ACR_PASSWORD_V2}#"
+      - name: ddapikey
+        value: "#{DD_API_KEY}#"
+    registries:
+      - server: "#{ACR_NAME_V2}#.azurecr.io"
+        username: "#{ACR_NAME_V2}#"
+        passwordSecretRef: myregistrypassword
+
+  template:
+    revisionSuffix: "#{GitCommitIdShort}#-#{Build.BuildId}#"
+    containers:
+      - image: "#{ACR_NAME_V2}#.azurecr.io/one-exch-order-svc:#{GitBuildVersion}#"
+        name: one-exch-order-svc
+        env:
+          - name: HTTP_PORT
+            value: 80
+          - name: DD_SERVICE
+            value: one-exch-order-svc
+          - name: DD_ENV
+            value: "#{environment}#"
+          - name: DD_VERSION
+            value: "#{GitBuildVersion}#"
+          - name: DD_API_KEY
+            secretRef: ddapikey
+          - name: DD_SITE
+            value: us3.datadoghq.com
+          - name: DD_LOGS_ENABLED
+            value: "true"
+          - name: DD_AZURE_SUBSCRIPTION_ID
+            value: "#{SUBSCRIPTION_ID}#"
+          - name: DD_AZURE_RESOURCE_GROUP
+            value: "#{RESOURCE_GROUP_NAME}#"        
+          - name: DD_GIT_REPOSITORY_URL
+            value: "#{Build.Repository.Uri}#"
+          - name: DD_GIT_COMMIT_SHA
+            value: "#{GitCommitIdShort}#"
+          - name: ConnectionStrings__OneExchangeConnectionString
+            value: "#{ConnectionStrings__OneExchangeConnectionString}#"
+          - name: ContentfulSettings__DeliveryToken
+            value: "#{ContentfulSettings__DeliveryToken}#"
+          - name: ContentfulSettings__EnvironmentId
+            value: "#{ContentfulSettings__EnvironmentId}#"
+          - name: ContentfulSettings__ManagementToken
+            value: "#{ContentfulSettings__ManagementToken}#"
+          - name: ContentfulSettings__SpaceId
+            value: "#{ContentfulSettings__SpaceId}#"
+          - name: InRules__InRuleBaseUrl
+            value: "#{InRules__InRuleBaseUrl}#"
+          - name: InRules__SubscriptionKey
+            value: "#{InRules__SubscriptionKey}#"
+          - name: InventoryService__BaseUrl
+            value: "#{InventoryService__BaseUrl}#"
+          - name: InventoryService__SubscriptionKey
+            value: "#{InventoryService__SubscriptionKey}#"
+          - name: InventoryService__Version
+            value: "#{InventoryService__Version}#"
+          - name: OrderReservationEventHub__CancellationRequestEventhubName
+            value: "#{OrderReservationEventHub__CancellationRequestEventhubName}#"
+          - name: OrderReservationEventHub__EventHubNamespace
+            value: "#{OrderReservationEventHub__EventHubNamespace}#"
+          - name: OrderReservationEventHub__ReservationRequestEventhubName
+            value: "#{OrderReservationEventHub__ReservationRequestEventhubName}#"
+          - name: BoomiConnectorApi__BaseUrl
+            value: "#{BoomiConnectorApi__BaseUrl}#"
+          - name: BoomiConnectorApi__ApiKeys__Reservation
+            value: "#{BoomiConnectorApi__ApiKeys__Reservation}#"
+          - name: BoomiConnectorApi__Authorization
+            value: "#{BoomiConnectorApi__Authorization}#"
+          - name: DeploymentEnvironment
+            value: "#{DeploymentEnvironment}#"
+          
+
+        resources:
+          cpu: 0.25
+          memory: 0.5Gi
+        probes:
+          - type: readiness
+            httpGet:
+              path: "/health"
+              port: 8080
+            httpHeaders:
+              - name: x-onesystem-ci
+                value: liveness probe
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 12 # Try over 60 seconds, then fail
+    scale:
+      minReplicas: 1
+      maxReplicas: 10

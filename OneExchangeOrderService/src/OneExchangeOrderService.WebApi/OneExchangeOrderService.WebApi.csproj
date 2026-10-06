@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="WebApi.IntegrationTests" />
+	</ItemGroup>
+
+  <Target Name="Swagger" AfterTargets="Build" DependsOnTargets="Build" Condition="$(SkipGenOpenAPI) != 'true'">
+    <Exec Command="dotnet swagger tofile --output ../../AzureAPI/service_swagger_spec_1.openapi.json $(OutputPath)\$(AssemblyName).dll v1" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />
+    <Exec Command="dotnet swagger tofile --output ../../AzureAPI/service_swagger_spec_2.openapi.json $(OutputPath)\$(AssemblyName).dll v2" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />
+  </Target>
+
+  <Target Name="Refitter" AfterTargets="Swagger" DependsOnTargets="Swagger" Condition="$(SkipGenOpenAPI) != 'true'">
+    <Exec Command="dotnet refitter --settings-file ../OneExchangeOrderService.HttpClient/IOneExchangeOrderServiceHttpClient.refitter.json" EnvironmentVariables="DOTNET_ROLL_FORWARD=LatestMajor" />
+  </Target>
+
+  <ItemGroup>
+		<PackageReference Include="Asp.Versioning.Mvc" />
+		<PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+		<PackageReference Include="Enterprise.Utilities.Serilog.EcsTextFormatter" />
+		<PackageReference Include="Enterprise.Utilities.Serilog.Enrichers.Sensitive" />
+		<PackageReference Include="Enterprise.Utilities.Swagger.DocumentFilters" />
+		<PackageReference Include="Enterprise.Utilities.Swagger.NamedOptions" />
+		<PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" />
+		<PackageReference Include="Microsoft.AspNetCore.JsonPatch" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.Extensions.Http" />
+		<PackageReference Include="Microsoft.Extensions.Http.Resilience" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="Serilog.Enrichers.CorrelationId" />
+		<PackageReference Include="Serilog.Enrichers.Environment" />
+		<PackageReference Include="Serilog.Enrichers.Sensitive" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\OneExchangeOrderService.Application\OneExchangeOrderService.Application.csproj" />
+		<ProjectReference Include="..\OneExchangeOrderService.Domain\OneExchangeOrderService.Domain.csproj" />
+		<ProjectReference Include="..\OneExchangeOrderService.Infrastructure\OneExchangeOrderService.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Filters\" />
+	</ItemGroup>
+
+</Project>

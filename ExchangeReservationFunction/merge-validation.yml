@@ -1,0 +1,21 @@
+pool:
+   name: vmss-nonprod
+
+trigger: none
+
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: OneVision/OneSystem
+    ref: refs/tags/pipeline-function-app-7.0.86
+  
+variables: 
+- group: OneSystem-Service-Common
+- name: SERVICE_NAME # Used for docker image, container app name, apim, etc.
+  value: exchange-reservation-service # this value is replaced automatically based on project name -> kebab during project creation
+
+extends:
+  template: Pipelines/Function App/merge-validation.yml@templates
+  parameters:
+    SERVICE_NAME: $(SERVICE_NAME)

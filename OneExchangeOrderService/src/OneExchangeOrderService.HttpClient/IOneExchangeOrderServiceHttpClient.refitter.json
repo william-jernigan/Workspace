@@ -1,0 +1,18 @@
+{
+  "openApiPath": "../../AzureAPI/service_swagger_spec_1.openapi.json",
+  "outputFolder": "../OneExchangeOrderService.HttpClient",
+  "outputFilename": "IOneExchangeOrderServiceHttpClient.cs",
+  "namespace": "OneExchangeOrderService.HttpClient",
+  "naming": {
+    "useOpenApiTitle": false,
+    "interfaceName": "OneExchangeOrderServiceHttpClient"
+  },
+  "optionalParameters": true,
+  "generateContracts": false,
+  "generateOperationHeaders": false,
+  "generateXmlDocCodeComments": false,
+  "generateStatusCodeComments": false,
+  "includePathMatches": [
+    "^/example.*"
+  ]
+}

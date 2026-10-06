@@ -1,0 +1,67 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Asp.Versioning.Mvc" Version="8.1.1" />
+    <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
+    <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+    <PackageVersion Include="AutoMapper" Version="12.0.1" />
+    <PackageVersion Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageVersion Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.0" />
+    <PackageVersion Include="Azure.Identity" Version="1.17.1" />
+    <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
+    <PackageVersion Include="contentful.aspnetcore" Version="8.6.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Dapper" Version="2.1.66" />
+    <PackageVersion Include="Dapper.Oracle" Version="2.0.3" />
+    <PackageVersion Include="Enterprise.Extensions.Caching.Distributed" Version="1.0.3" />
+    <PackageVersion Include="Enterprise.Generators.CacheProxy" Version="1.0.14" />
+    <PackageVersion Include="Enterprise.Utilities.MassTransit.CloudEvents" Version="1.0.1" />
+    <PackageVersion Include="Enterprise.Utilities.Serilog.EcsTextFormatter" Version="1.0.1" />
+    <PackageVersion Include="Enterprise.Utilities.Serilog.Enrichers.Sensitive" Version="1.0.1" />
+    <PackageVersion Include="Enterprise.Utilities.Swagger.DocumentFilters" Version="1.0.0" />
+    <PackageVersion Include="Enterprise.Utilities.Swagger.NamedOptions" Version="1.0.6" />
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageVersion Include="MassTransit" Version="8.1.3" />
+    <PackageVersion Include="MassTransit.Azure.ServiceBus.Core" Version="8.1.3" />
+    <PackageVersion Include="MassTransit.EventHub" Version="8.1.3" />
+    <PackageVersion Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.HeaderPropagation" Version="8.0.24" />
+    <PackageVersion Include="Microsoft.AspNetCore.JsonPatch" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.24" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.24" />
+    <PackageVersion Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="7.1.0" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.4" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.13" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.3.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="MSTest.TestAdapter" Version="4.1.0" />
+    <PackageVersion Include="MSTest.TestFramework" Version="4.1.0" />
+    <PackageVersion Include="Nanoid" Version="3.1.0" />
+    <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="NJsonSchema" Version="11.5.2" />
+    <PackageVersion Include="Oracle.ManagedDataAccess.Core" Version="23.26.100" />
+    <PackageVersion Include="Refit" Version="10.0.1" />
+    <PackageVersion Include="Saunter" Version="0.13.0" />
+    <PackageVersion Include="Scrutor" Version="4.2.2" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+    <PackageVersion Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageVersion Include="Serilog.Enrichers.Sensitive" Version="2.1.0" />
+    <PackageVersion Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
+    <PackageVersion Include="Serilog.Sinks.AzureEventHub" Version="6.0.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
+    <PackageVersion Include="Yarp.ReverseProxy" Version="2.1.0" />
+  </ItemGroup>
+</Project>

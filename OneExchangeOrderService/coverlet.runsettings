@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <DataCollector friendlyName="XPlat Code Coverage">
+                <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md -->
+                <Configuration>
+                    <Format>opencover</Format>
+                    <OutputDirectory>$(Agent.TempDirectory)/coverage</OutputDirectory>
+
+                    <Include>[OneExchangeOrderService.*]*</Include>
+                    <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+                    <ExcludeByFile>**/OneExchangeOrderService.WebApi/program.cs</ExcludeByFile>
+
+                    <SingleHit>false</SingleHit>
+                    <IncludeTestAssembly>false</IncludeTestAssembly>
+                    <SkipAutoProps>true</SkipAutoProps>
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+</RunSettings>

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Dapper.Oracle" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistance\Interceptors\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OneExchangeOrderService.Application\OneExchangeOrderService.Application.csproj" />
+    <ProjectReference Include="..\OneExchangeOrderService.Domain\OneExchangeOrderService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

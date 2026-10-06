@@ -1,0 +1,45 @@
+version: $(GitBuildVersion)
+apimServiceName: $(ApimResourceName)
+apiVersionSets:
+  - name: $(ServiceName)
+    displayName: $(ServiceName)
+    description: $(ServiceName) Version 1
+    versioningScheme: Segment
+apis:
+  - name: $(ServiceName)
+    displayName:  $(ServiceName)
+    #description: This API is specific for Clarity Leads to consume.    
+    serviceUrl: $(BackendUrl)
+    openApiSpec: service_swagger_spec.openapi.json
+    policy: Policies/APIPolicies.xml
+    path: $(ServiceName)
+    apiVersion: v1
+    apiVersionDescription: My first version
+    apiVersionSetId: $(ServiceName)
+    apiRevision: $(GitBuildVersion)
+    protocols: https
+    subscriptionRequired: true
+    isCurrent: true
+    products: Corporate, wherenext-arrivia
+    # diagnostics:
+    #   name: applicationinsights
+    #   alwaysLog: allErrors
+    #   loggerId: _app_insights_name_ # The id of the logger.
+    #   sampling:
+    #     samplingType: fixed
+    #     percentage: 100
+    #   enableHttpCorrelationHeaders: true
+# loggers:
+#     - name: _app_insights_name_
+#       loggerType: applicationInsights
+#       credentials:
+#         instrumentationKey: _app_insights_key_
+#       isBuffered: true
+#       resourceId: _app_insights_id_
+products:
+    - name: Corporate
+      displayName: Corporate
+      subscriptionRequired: true
+      approvalRequired: true
+      subscriptionsLimit: 1
+      state: Published

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APITransformationsFunction", "APITransformationsFunction\APITransformationsFunction.csproj", "{27CAABB3-1F94-4FF2-87D8-645113102C44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D43E125B-C606-4950-85B7-8F843354DA34}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+		dockerfile = dockerfile
+		merge-validation.yml = merge-validation.yml
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITransformationsFunctionTests", "APITransformationsFunctionTests\APITransformationsFunctionTests.csproj", "{BE3EBD87-A44C-4363-91E9-030F1A14491A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27CAABB3-1F94-4FF2-87D8-645113102C44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27CAABB3-1F94-4FF2-87D8-645113102C44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27CAABB3-1F94-4FF2-87D8-645113102C44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27CAABB3-1F94-4FF2-87D8-645113102C44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE3EBD87-A44C-4363-91E9-030F1A14491A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE3EBD87-A44C-4363-91E9-030F1A14491A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE3EBD87-A44C-4363-91E9-030F1A14491A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE3EBD87-A44C-4363-91E9-030F1A14491A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4036A69-A56F-4635-8C6A-00F1E969290C}
+	EndGlobalSection
+EndGlobal

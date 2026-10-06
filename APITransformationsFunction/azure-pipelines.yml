@@ -1,0 +1,81 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneVision/OneSystem
+      ref: refs/tags/pipeline-function-app-5.0
+
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+
+parameters:
+  - name: DeploymentTarget
+    displayName: Target for Deployment
+    default: Default
+    values:
+      - Default
+      - DEV
+      - QAT
+      - STG
+      - PRD
+  - name: DefaultEnvironments
+    displayName: Default Deployment Environments
+    type: object
+    default:
+      - DEV
+  - name: CanaryEnvironments
+    displayName: Canary Deployment Environments
+    type: object
+    default:
+      - N/A
+  - name: ForceDeployAPIM
+    displayName: Force Re-Deploy of APIM?
+    type: boolean
+    default: false
+  - name: ForceBuild
+    displayName: Force Image Build (update base image)?
+    type: boolean
+    default: false
+  - name: CanaryPercentage
+    default: 10
+  - name: CanaryWindow
+    default: 5
+# Example of how to add app settings that can be passed as env variables to the function.
+# These are appended along with other settings in the pipeline template.
+# Link: https://hiltongrandvacations.visualstudio.com/OneVision/_git/OneSystem?path=/Pipelines/Function%20App/environment-simple-deploy.yml&version=GBmain&line=72&lineEnd=73&lineStartColumn=1&lineEndColumn=1&lineStyle=plain&_a=contents
+  - name: AppSettings
+    displayName: App Settings
+    type: string
+    default: >-
+      -APPService__BaseUrl "$(APPService__BaseUrl)" 
+      -APPService__SubscriptionKey "$(APPService__SubscriptionKey)" 
+      -APPService__Version "$(APPService__Version)"
+      -MemberService__BaseUrl "$(MemberService__BaseUrl)"
+      -MemberService__SubscriptionKey "$(MemberService__SubscriptionKey)"
+      -MemberService__Version "$(MemberService__Version)"
+      -OrderService__BaseUrl "$(OrderService__BaseUrl)"
+      -OrderService__SubscriptionKey "$(OrderService__SubscriptionKey)"
+      -OrderService__Version "$(OrderService__Version)"
+      -InventoryService__BaseUrl "$(InventoryService__BaseUrl)"
+      -InventoryService__SubscriptionKey "$(InventoryService__SubscriptionKey)"
+      -InventoryService__Version "$(InventoryService__Version)"
+      -CatalogService__BaseUrl "$(CatalogService__BaseUrl)"
+      -CatalogService__SubscriptionKey "$(CatalogService__SubscriptionKey)"
+      -CatalogService__Version "$(CatalogService__Version)"
+      -OAuthTenantId "$(OAuthTenantId)"
+      -OAuthClientId "$(OAuthClientId)"
+extends:
+  template: Pipelines/Function App/pipeline.yml@templates
+  parameters:
+    DeploymentTarget: ${{ parameters.DeploymentTarget }}
+    DefaultEnvironments: ${{ parameters.DefaultEnvironments }}
+    ForceDeployAPIM: ${{ parameters.ForceDeployAPIM }}
+    ForceBuild: ${{ parameters.ForceBuild }}
+    CanaryEnvironments: ${{ parameters.CanaryEnvironments }}
+    CanaryPercentage: ${{ parameters.CanaryPercentage }}
+    CanaryWindow: ${{ parameters.CanaryWindow }}
+    AppSettings: ${{ parameters.AppSettings}}
+    FunctionName: hgv-service

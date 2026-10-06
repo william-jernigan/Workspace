@@ -1,0 +1,15 @@
+schema-version: v2.1
+dd-service: one-exchange-order-service
+team: One System,
+application: one-exchange-order-service
+description: one-exchange-order-service
+lifecycle: ["dev", "qa", "uat", "stg", "prod"]
+links:
+ - name: Source
+   type: repo
+   provider: Azure
+   url: https://dev.azure.com/HiltonGrandVacations/OneVision/_git/API.Solution.Template
+ - name: Deployment
+   type: repo
+   provider: Azure
+   url: https://dev.azure.com/HiltonGrandVacations/OneVision/_git/API.Solution.Template?path=/azure-pipelines.yml

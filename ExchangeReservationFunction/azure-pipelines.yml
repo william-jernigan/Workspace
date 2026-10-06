@@ -1,0 +1,72 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: OneVision/OneSystem
+      ref: refs/tags/pipeline-function-app-7.0
+
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+
+parameters:
+  - name: DeploymentTarget
+    displayName: Target for Deployment
+    default: Default
+    values:
+      - Default
+      - DEV
+      - QAT
+      - STG
+      - PRD
+  - name: DefaultEnvironments
+    displayName: Default Deployment Environments
+    type: object
+    default:
+      - DEV
+  - name: CanaryEnvironments
+    displayName: Canary Deployment Environments
+    type: object
+    default:
+      - N/A
+  - name: ForceDeployAPIM
+    displayName: Force Re-Deploy of APIM?
+    type: boolean
+    default: false
+  - name: ForceBuild
+    displayName: Force Image Build (update base image)?
+    type: boolean
+    default: false
+  - name: CanaryPercentage
+    default: 10
+  - name: CanaryWindow
+    default: 5
+# Example of how to add app settings that can be passed as env variables to the function.
+# These are appended along with other settings in the pipeline template.
+# Link: https://hiltongrandvacations.visualstudio.com/OneVision/_git/OneSystem?path=/Pipelines/Function%20App/environment-simple-deploy.yml&version=GBmain&line=72&lineEnd=73&lineStartColumn=1&lineEndColumn=1&lineStyle=plain&_a=contents
+  - name: AppSettings
+    displayName: App Settings
+    type: string
+    default: >-
+      -OrderService__BaseUrl "$(OrderService__BaseUrl)"
+      -OrderService__SubscriptionKey "$(OrderService__SubscriptionKey)"
+      -OrderService__Version "$(OrderService__Version)"
+      -AzureFunctionsWebHost__hostid "$(HostId)"
+      -FUNCTIONS_WORKER_RUNTIME "$(FUNCTIONS_WORKER_RUNTIME)"
+
+extends:
+  template: Pipelines/Function App/pipeline.yml@templates
+  parameters:
+    DeploymentTarget: ${{ parameters.DeploymentTarget }}
+    DefaultEnvironments: ${{ parameters.DefaultEnvironments }}
+    ForceDeployAPIM: ${{ parameters.ForceDeployAPIM }}
+    ForceBuild: ${{ parameters.ForceBuild }}
+    CanaryEnvironments: ${{ parameters.CanaryEnvironments }}
+    CanaryPercentage: ${{ parameters.CanaryPercentage }}
+    CanaryWindow: ${{ parameters.CanaryWindow }}
+    AppSettings: ${{ parameters.AppSettings}}
+    ProjectHasAPIM: true
+    FunctionName: reservation # The last part of the azure resource name. (e.g. "func-usw3-dev-project-function" === "function")
+    BaseProjectName: exchange

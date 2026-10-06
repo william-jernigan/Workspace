@@ -1,0 +1,973 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "v2",
+    "version": "2.0"
+  },
+  "paths": {
+    "/api/Order/reservations": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Order/reservations/{bookingID}/cancel": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "bookingID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancellationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Order/reservations/search": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReservationSearchRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Order/reservations/{reservationID}": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "parameters": [
+          {
+            "name": "reservationID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "responses": {
+          "200": {
+            "description": null,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AttributePair": {
+        "type": "object",
+        "properties": {
+          "attribute": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingItem": {
+        "type": "object",
+        "properties": {
+          "itemCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemClass": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          },
+          "memberID": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "weekNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "guestCounts": {
+            "$ref": "#/components/schemas/GuestCounts"
+          },
+          "isOwnerBooking": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "guestInfo": {
+            "$ref": "#/components/schemas/GuestInfo"
+          },
+          "priceLevel": {
+            "$ref": "#/components/schemas/PriceLevel"
+          },
+          "bookingAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          },
+          "bookingComments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingItemRequest": {
+        "required": [
+          "endDate",
+          "itemCode",
+          "memberID",
+          "parentCode",
+          "startDate"
+        ],
+        "type": "object",
+        "properties": {
+          "itemCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemClass": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          },
+          "memberID": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "weekNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "guestCounts": {
+            "$ref": "#/components/schemas/GuestCounts"
+          },
+          "isOwnerBooking": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "guestInfo": {
+            "$ref": "#/components/schemas/GuestInfo"
+          },
+          "priceLevel": {
+            "$ref": "#/components/schemas/PriceLevel"
+          },
+          "bookingAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          },
+          "bookingComments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CancelItemRequest": {
+        "required": [
+          "cancellationDate",
+          "cancellationReason",
+          "cancellationStatus",
+          "externalReference",
+          "systemMeta"
+        ],
+        "type": "object",
+        "properties": {
+          "systemMeta": {
+            "$ref": "#/components/schemas/SystemMeta"
+          },
+          "externalReference": {
+            "$ref": "#/components/schemas/ExternalReference"
+          },
+          "bookingId": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refundedAmount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "cancellationStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "bookingItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookingItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CancellationRequest": {
+        "required": [
+          "id",
+          "source",
+          "specversion",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "specversion": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "datacontenttype": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataschema": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ispartial": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CancelItemRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DigitalAddress": {
+        "type": "object",
+        "properties": {
+          "_sequence": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "digitalAddressType": {
+            "type": "string",
+            "nullable": true
+          },
+          "digitalAddress": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalReference": {
+        "type": "object",
+        "properties": {
+          "sourceSystem": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetSystem": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceReferenceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetReferenceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GuestCounts": {
+        "type": "object",
+        "properties": {
+          "adults": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "children": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GuestInfo": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalAddresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostalAddress"
+            },
+            "nullable": true
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PhoneNumber"
+            },
+            "nullable": true
+          },
+          "digitalAddresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DigitalAddress"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderBy": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "nullable": true
+          },
+          "direction": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PhoneNumber": {
+        "type": "object",
+        "properties": {
+          "_sequence": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "phoneType": {
+            "type": "string",
+            "nullable": true
+          },
+          "number": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostalAddress": {
+        "type": "object",
+        "properties": {
+          "_sequence": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "addressType": {
+            "type": "string",
+            "nullable": true
+          },
+          "line1": {
+            "type": "string",
+            "nullable": true
+          },
+          "line2": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PriceLevel": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "priceLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "currency": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "priceAttributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AttributePair"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "ReservationRequest": {
+        "required": [
+          "data",
+          "id",
+          "source",
+          "specversion",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "specversion": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "datacontenttype": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataschema": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ispartial": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ReservationRequestData"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReservationRequestData": {
+        "required": [
+          "bookingItems",
+          "externalReference",
+          "systemMeta"
+        ],
+        "type": "object",
+        "properties": {
+          "systemMeta": {
+            "$ref": "#/components/schemas/SystemMeta"
+          },
+          "externalReference": {
+            "$ref": "#/components/schemas/ExternalReference"
+          },
+          "bookingItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookingItemRequest"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReservationSearchRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "specversion": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "correlationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "datacontenttype": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataschema": {
+            "type": "string",
+            "nullable": true
+          },
+          "subject": {
+            "type": "string",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isPartial": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ReservationSearchRequestData"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReservationSearchRequestData": {
+        "type": "object",
+        "properties": {
+          "systemMeta": {
+            "$ref": "#/components/schemas/RetrievalSystemMeta"
+          },
+          "searchCriteria": {
+            "$ref": "#/components/schemas/SearchCriteria"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RetrievalSystemMeta": {
+        "type": "object",
+        "properties": {
+          "tenantID": {
+            "type": "string",
+            "nullable": true
+          },
+          "_insertedDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "_insertedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "_updatedDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "_updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "statusReason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SearchCriteria": {
+        "type": "object",
+        "properties": {
+          "tradingAgreementCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceReservationIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceIdentifier"
+            },
+            "nullable": true
+          },
+          "sourceMemberIds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SourceIdentifier"
+            },
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "reservationDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "reservationDateInterval": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "arrivalDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "arrivalDateInterval": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "orderBy": {
+            "$ref": "#/components/schemas/OrderBy"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SourceIdentifier": {
+        "type": "object",
+        "properties": {
+          "sourceSystem": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemMeta": {
+        "type": "object",
+        "properties": {
+          "tenantID": {
+            "type": "string",
+            "nullable": true
+          },
+          "_insertedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "_insertedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "_updatedDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "_updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "statusReason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
